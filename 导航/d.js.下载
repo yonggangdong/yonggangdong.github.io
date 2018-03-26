@@ -1,0 +1,476 @@
+$('.search_menu li').click(function() {
+    $(this).parent().parent().children('a').attr('class', $(this).children('a').attr('class'));
+    $(this).parent().hide();
+});
+$('.search_text').keypress(function(e) {
+    var key = e.which;
+    if (key == 13) {
+        $('.search_btn').click();
+    }
+});
+$('.search_btn').click(function() {
+    var k = $('.search_text').val();
+    if ($('.search_engine').children('a').attr('class') == 'baidu') {
+        window.open('http://www.baidu.com/s?wd=' + k);
+    } else {
+        window.open('http://www.so.com/s?q=' + k);
+    }
+});
+
+
+$(document).ready(function() {
+
+    Boxy.DEFAULTS.title = "温馨提示";
+    //新增分类ajax
+    $('.main').on('click', '.con_category .add_page', function() {
+        var obj = $(this);
+        var li = obj.parent('li');
+        var cid = li.find('.urllist').attr('data-id');
+        $.ajax({
+            url: '/Ajax/add_category_ajax',
+            data: {'cid': cid},
+            async: false,
+            success: function(data) {
+                if (data == -1) {
+                    new Boxy('<div class="wx_tips">普通用户最多有10个分类。</div>', {modal: true});
+                } else if (data == -2) {
+                    new Boxy('<div class="wx_tips">普通VIP最多有15个分类。</div>', {modal: true});
+                } else {
+
+                    var newli = '<li class="rank con_category"><div class="add_page"></div><input value="新分类" class="h1_txt tog" type="text"><h1><input value="新分类" class="h1_txt" data-value="新分类" type="text"><span class="edit_ok"></span><span class="edit_del"></span></h1><div class="pbox"><div class="urllist" data-id="' + data + '"></div><div class="blank_ws"><em title="添加网址"></em></div></div></li>';
+                    li.after(newli);
+                    huiche();
+                    var $next = li.next().find('.urllist');
+
+                    Sortable.create($next[0], {
+                        group: 'url',
+                        draggable: '.url_list',
+                        filter: '.my_del,.my_edit',
+                        animation: 150,
+                        onFilter: function(evt) {
+                            if (Sortable.utils.is(evt.target, ".my_del")) {  // Click on remove button
+                                var obj = $(evt.item);
+                                var aid = obj.attr('data-id');
+                                $.ajax({
+                                    url: '/Ajax/dele_address_ajax',
+                                    data: {'aid': aid},
+                                    success: function(data) {
+                                        if (data == '1') {
+                                            obj.parent().parent().find('.blank_ws:hidden').show();
+                                            obj.remove();
+                                        } else {
+                                            alert('非法操作');
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        onMove: function(evt) {
+                            if ($(evt.from).attr('data-id') != $(evt.to).attr('data-id')) {
+                                var num1 = $(evt.to).find('.url_list').length;
+                                var num2 = $(evt.to).find('.add_box').length;
+                                if (num1 + num2 > 9) {
+                                    return false;
+                                }
+                            }
+                        },
+                        onSort: function(evt) {
+                            $.ajax({
+                                type: "POST",
+                                url: '/Ajax/url_orderlist',
+                                data: {'list': {'id': $(evt.item).attr('data-id'), 'from': $(evt.from).attr('data-id'), 'to': $(evt.to).attr('data-id'), 'old': evt.oldIndex, 'new': evt.newIndex}},
+                                success: function(data) {
+                                    var num = $(evt.to).find('.url_list').length;
+                                    if (num > 9) {
+                                        $(evt.to).next('.blank_ws:visible').hide();
+                                    } else {
+                                        $(evt.to).next('.blank_ws:hidden').show();
+                                    }
+                                }
+                            });
+                        }
+
+                    });
+
+
+                }
+            }
+        });
+    });
+    //切换到分类编辑状态
+    $('.main').on('click', '.con_category h1 .my_edit', function() {
+        var h1 = $(this).parent('h1');
+        var b = h1.find('b').text();
+        h1.empty();
+        h1.append('<input value="' + b + '" class="h1_txt" data-value="' + b + '" type="text"><span class="edit_ok"></span><span class="edit_del"></span>');
+        h1.before('<input value="' + b + '" class="h1_txt tog" type="text">');
+    });
+//取消分类操作
+    $('.main').on('click', '.con_category h1 .edit_del', function() {
+        var h1 = $(this).parent('h1');
+        var b = h1.find('.h1_txt').attr('data-value');
+        h1.empty();
+        h1.append('<b>' + b + '</b><span class="my_edit" title="编辑分类"></span><span class="my_del" title="删除分类"></span>');
+        h1.parent('.rank').find('.tog').remove();
+    });
+//分类名称修改ajax
+    $('.main').on('click', '.con_category h1 .edit_ok', function() {
+        var h1 = $(this).parent('h1');
+        var cid = h1.parent('li').find('.urllist').attr('data-id');
+        var text = h1.parent('.rank').find('.tog').val();
+        $.ajax({
+            url: '/Ajax/edit_category_ajax',
+            data: {'cid': cid, 'text': text},
+            success: function(data) {
+                if (data == '1') {
+                    h1.empty();
+                    h1.append('<b>' + text + '</b><span class="my_edit" title="编辑分类"></span><span class="my_del" title="删除分类"></span>');
+                    h1.parent('.rank').find('.tog').remove();
+                } else {
+                    new Boxy('<div class="wx_tips">请将分类名称控制在1-5个字符!</div>', {modal: true});
+                }
+            }
+        });
+    });
+//删除分类确认
+    $('.main').on('click', '.con_category h1 .my_del', function() {
+        var h1 = $(this).parent('h1');
+        var cid = h1.parent('li').find('.urllist').attr('data-id');
+        var n = h1.parent('li').find('.url_list').length;
+        if (n == 0) {
+            $.ajax({
+                url: '/Ajax/dele_category_ajax',
+                data: {'cid': cid},
+                success: function(data) {
+                    if (data == '1') {
+                        $('.close').click();
+                        h1.parent('li').remove();
+                    } else {
+                        $('.close').click();
+                        new Boxy('<div class="wx_tips">您至少要保留一个分类。</div>', {modal: true});
+                    }
+                }
+            });
+        } else {
+            new Boxy('<div class="wx_tips">确定要删除吗?分类删除后，书签将被移入回收站。</div><a href="javascript:;" class="btn del_cate" value="' + cid + '">确定</a>', {modal: true});
+        }
+    });
+//删除分类ajax
+    $('body').on('click', '.del_cate', function() {
+
+        var cid = $(this).attr('value');
+        $.ajax({
+            url: '/Ajax/dele_category_ajax',
+            data: {'cid': cid},
+            success: function(data) {
+                if (data == '1') {
+                    $('.close').click();
+                    $('div[data-id=' + cid + ']').parent().parent('li').remove();
+                } else {
+                    $('.close').click();
+                    new Boxy('<div class="wx_tips">您至少要保留一个分类。</div>', {modal: true});
+                }
+            }
+        });
+    });
+//显示添加网址表单
+    $('.main').on('click', '.con_category .blank_ws', function() {
+        if ($('.main').find('.add_box').length > 0) {
+            //显示其他部分add_box的入口，下面进行删除
+            $('.main').find('.add_box').parent().parent().find('.blank_ws:hidden').show();
+        }
+        $('.main').find('.plus_box').remove();
+        $('.main').find('.url_list:hidden').show();
+        var n = $(this).parent().find('.url_list').length;
+        if (n < 10) {
+            if (n == 9) {
+                $(this).hide();
+            }
+
+            $(this).parent().find('.urllist').append('<div class="plus_box add_box"><input type="text" value="" placeholder="名称" class="psm_txt"><em class="edit_ok"></em><em class="edit_del"></em><input type="text" value="" placeholder="网址" class="purl_txt"></div>');
+        } else {
+            alert('每个分组最多添加10个网址');
+        }
+    });
+    $('.main').on('click', '.add_box .psm_txt', function() {
+        if ($(this).val() == '名称') {
+            $(this).val('');
+        }
+    });
+    $('.main').on('click', '.add_box .purl_txt', function() {
+        if ($(this).val() == '网址') {
+            $(this).val('');
+        }
+    });
+//取消添加
+    $('.main').on('click', '.add_box .edit_del', function() {
+        $(this).parent().parent().parent().find('.blank_ws:hidden').show();
+        $(this).parent().remove();
+
+    });
+//添加网址ajax
+    $('.main').on('click', '.add_box .edit_ok', function() {
+
+        var add_box = $(this).parent();
+        var name = add_box.children('.psm_txt').val();
+        var url = add_box.children('.purl_txt').val();
+        var cid = add_box.parent().attr('data-id');
+        if (name == '' || url == '') {
+            return false;
+        }
+
+        $.ajax({
+            url: '/Ajax/add_address_ajax',
+            data: {
+                'name': name,
+                'url': url,
+                'cid': cid
+            },
+            async: false,
+            success: function (data) {
+                if (data == '0') {
+                    new Boxy('<div class="wx_tips">名称格式错误。</div>', {modal: true});
+                } else if (data == '2') {
+                    new Boxy('<div class="wx_tips">网址格式错误。</div>', {modal: true});
+                } else if (data == '3') {
+                    new Boxy('<div class="wx_tips">所选分类下最多存放网址10个。</div>', {modal: true});
+                } else {
+                    data = data.split(',');
+                    add_box.parent().append('<div class="url_list" data-id="' + data[3] + '"><img src="' + data[0] + '" height="16" width="16" ><a class="clickurl" href="' + data[2] + '" target="_blank">' + name + '</a><span class="my_del" title="删除网址"></span><span class="my_edit" title="编辑网址" ></span></div>');
+                    add_box.remove();
+                }
+            }
+        });
+    });
+//切换到网址编辑状态
+    $('.main').on('click', '.url_list .my_edit', function() {
+        if ($('.main').find('.add_box').length > 0) {
+            //显示其他add_box的入口
+            $('.main').find('.add_box').parent().parent().find('.blank_ws:hidden').show();
+        }
+        $('.main').find('.plus_box').remove();
+        $('.main').find('.url_list:hidden').show();
+        $(this).parent().hide();
+        var id = $(this).parent().attr('data-id');
+        var name = $(this).parent().find('a').html();
+        var url = $(this).parent().find('a').attr('href');
+        $(this).parent().after('<div class="plus_box edit_box" data-id="' + id + '"><input value="' + name + '" class="psm_txt" type="text"><em class="edit_ok"></em><em class="edit_del"></em><input value="' + url + '" class="purl_txt" type="text"></div>');
+
+    });
+//取消编辑
+    $('.main').on('click', '.edit_box .edit_del', function() {
+        $(this).parent().prev().show();
+        $(this).parent().remove();
+    });
+//网址修改ajax
+    $('.main').on('click', '.edit_box .edit_ok', function() {
+        var obj = $(this);
+        var name = $(this).parent().children('.psm_txt').val();
+        var url = $(this).parent().children('.purl_txt').val();
+        var aid = $(this).parent().attr('data-id');
+        $.ajax({
+            url: '/Ajax/edit_address_ajax',
+            data: {
+                'name': name,
+                'url': url,
+                'aid': aid
+            },
+            async: false,
+            success: function(data) {
+                if (data == 'error!') {
+                    alert('非法操作');
+                } else if (data == '0') {
+                    alert('名称格式错误');
+                } else if (data == '2') {
+                    alert('网址格式错误');
+                } else {
+                    obj.parent().prev('.url_list').children('img').attr('src', "/Api/getfav?url=" + data);
+                    obj.parent().prev('.url_list').children('a').attr('href', data);
+                    obj.parent().prev('.url_list').children('a').html(name);
+                    obj.parent().prev('.url_list').show();
+                    obj.parent().remove();
+
+                }
+            }
+        });
+    });
+//网址删除ajax
+//    $('.main').on('click', '.url_list .my_del', function() {
+//        var obj = $(this);
+//        var aid = $(this).parent().attr('data-id');
+//        $.ajax({
+//            url: '/Ajax/dele_address_ajax',
+//            data: {'aid': aid},
+//            async: false,
+//            success: function(data) {
+//                if (data == '1') {
+//                    obj.parent().parent().parent().find('.blank_ws').show();
+//                    obj.parent().remove();
+//                } else {
+//                    alert('非法操作');
+//                }
+//            }
+//        });
+//    });
+});
+//获得点击次数
+$('.main').on('click', '.clickurl', function() {
+    var urlid = $(this).parent().attr('data-id');
+    $.ajax({
+        url: '/Ajax/clickurl',
+        data: {'urlid': urlid},
+        async: false,
+        success: function(data) {
+
+        }
+    });
+});
+//获得推荐的点击次数
+$('.tuijian_url').on('click', '.tuijian_clickurl', function() {
+    var urlid = $(this).attr('data-id');
+    if (urlid) {
+        $.ajax({
+            url: '/Ajax/tuijian_clickurl',
+            data: {'urlid': urlid},
+            async: false,
+            success: function(data, textStatus) {
+
+            }
+        });
+    }
+
+});
+
+//获得推荐网址的点击次数
+$('.website_clickurl').on('click', function() {
+    var urlid = $(this).attr('data-id');
+    if (urlid) {
+        $.ajax({
+            url: '/Ajax/website_clickurl',
+            data: {'urlid': urlid},
+            async: false,
+            success: function(data, textStatus) {
+
+            }
+        });
+    }
+
+});
+
+//获得应用的点击次数
+$('.app_clickurl').on('click', function () {
+    var urlid = $(this).attr('data-id');
+    if (urlid) {
+        $.ajax({
+            url: '/Ajax/app_clickurl',
+            data: {'urlid': urlid},
+            async: false,
+            success: function (data, textStatus) {
+
+            }
+        });
+    }
+
+});
+
+//获得文章的点击次数
+$('.article_clickurl').on('click', function () {
+    var urlid = $(this).attr('data-id');
+    if (urlid) {
+        $.ajax({
+            url: '/Ajax/article_clickurl',
+            data: {'urlid': urlid},
+            async: false,
+            success: function (data, textStatus) {
+
+            }
+        });
+    }
+
+});
+
+$('#baidu').on('click', function() {
+    $(this).parent("li").addClass("active");
+    $(this).parent("li").siblings().removeClass("active");
+    $("#baidu_a").parent().children("a").css("display", "none");
+    $("#baidu_a").css("display", "block");
+    $("#searchform").attr('action', 'https://www.baidu.com/s');
+    $("#searchform").children(".search_kw").attr('name', 'wd');
+});
+$('#sogou').on('click', function() {
+    $(this).parent("li").addClass("active");
+    $(this).parent("li").siblings().removeClass("active");
+    $("#sogou_a").parent().children("a").css("display", "none");
+    $("#sogou_a").css("display", "block");
+    $("#searchform").attr('action', 'http://www.sogou.com/web');
+    $("#searchform").children(".search_kw").attr('name', 'query');
+});
+$('#news').on('click', function() {
+    $(this).parent("li").addClass("active");
+    $(this).parent("li").siblings().removeClass("active");
+    $("#news_a").parent().children("a").css("display", "none");
+    $("#news_a").css("display", "block");
+    $("#searchform").attr('action', 'http://news.baidu.com/ns');
+    $("#searchform").children(".search_kw").attr('name', 'word');
+});
+$('#bing').on('click', function() {
+    $(this).parent("li").addClass("active");
+    $(this).parent("li").siblings().removeClass("active");
+    $("#bing_a").parent().children("a").css("display", "none");
+    $("#bing_a").css("display", "block");
+    $("#searchform").attr('action', 'http://cn.bing.com/search');
+    $("#searchform").children(".search_kw").attr('name', 'q');
+});
+$('#haosou').on('click', function() {
+    $(this).parent("li").addClass("active");
+    $(this).parent("li").siblings().removeClass("active");
+    $("#haosou_a").parent().children("a").css("display", "none");
+    $("#haosou_a").css("display", "block");
+    $("#searchform").attr('action', 'http://www.so.com/s');
+    $("#searchform").children(".search_kw").attr('name', 'q');
+});
+$('#map').on('click', function() {
+    $(this).parent("li").addClass("active");
+    $(this).parent("li").siblings().removeClass("active");
+    $("#map_a").parent().children("a").css("display", "none");
+    $("#map_a").css("display", "block");
+    $("#searchform").attr('action', 'http://map.baidu.com/m');
+    $("#searchform").children(".search_kw").attr('name', 'word');
+});
+$('#gouwu').on('click', function() {
+    $(this).parent("li").addClass("active");
+    $(this).parent("li").siblings().removeClass("active");
+    $("#gouwu_a").parent().children("a").css("display", "none");
+    $("#gouwu_a").css("display", "block");
+    $("#searchform").attr('action', 'http://www.yfdj.com/Search/index');
+    $("#searchform").children(".search_kw").attr('name', 'key');
+});
+function huiche() {
+    $('.edit_box').children("input").focus(function() {
+        $(this).off('focus');
+        $(this).keypress(function(event) {
+            var keyCode = (event.keyCode ? event.keyCode : event.which);
+            if (keyCode === 13) {
+                $(this).parent().children(".edit_ok").click();
+            }
+        });
+    });
+    $('.add_box').children("input").focus(function() {
+        $(this).off('focus');
+        $(this).keypress(function(event) {
+            var keyCode = (event.keyCode ? event.keyCode : event.which);
+            if (keyCode === 13) {
+                $(this).parent().children(".edit_ok").click();
+            }
+        });
+    });
+    $('.con_category').children("h1").children(".h1_txt").focus(function() {
+        $(this).off('focus');
+        $(this).keypress(function(event) {
+            var keyCode = (event.keyCode ? event.keyCode : event.which);
+            if (keyCode === 13) {
+                $(this).parent().children(".edit_ok").click();
+            }
+        });
+    });
+}
