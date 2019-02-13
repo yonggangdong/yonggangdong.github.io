@@ -11,9 +11,9 @@ body{
     min-width:1150px;
 }
 .middle{
-    width:1150px;
+    width:1030px;
     margin:0px auto;
-    min-width:1150px;
+    min-width:1030px;
 }
 .nav_head {
     font-size:12px;
@@ -73,11 +73,11 @@ body{
 /*便利贴*/
 .bianlitie ul li{
     float: left;
-    width: 268px;
+    width: 158px;
     height: 65px;
     background-repeat:  no-repeat;
     margin: 11px 20px 11px 0;
-    border: #d9d9d9 solid 1px;
+    border: #d9d9d9 solid 0px;
     border-radius: 5px;
     /*    box-shadow: -2px 2px 3px #d9d9d9;*/
 }
@@ -90,6 +90,7 @@ body{
     border-radius: 5px 0 0 5px;
     border-right: 1px #d9d9d9 solid
 }
+.boderheight{height: 71px}
 .bianlitie ul li .con{
     width: 235px;
     border-radius: 0 5px 5px 0;
@@ -100,7 +101,7 @@ body{
     background-color: #fff;
     padding: 6px 5px;
     height: 20px;
-    width:228px;
+    width:110px;
 }
 .bianlitie ul li .bb-1{
     border-bottom: #d9d9d9 solid 1px;

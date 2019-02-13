@@ -442,8 +442,8 @@ $('#gouwu').on('click', function() {
     $(this).parent("li").siblings().removeClass("active");
     $("#gouwu_a").parent().children("a").css("display", "none");
     $("#gouwu_a").css("display", "block");
-    $("#searchform").attr('action', 'http://www.yfdj.com/Search/index');
-    $("#searchform").children(".search_kw").attr('name', 'key');
+    $("#searchform").attr('action', 'https://s.taobao.com/search');
+    $("#searchform").children(".search_kw").attr('name', 'q');
 });
 function huiche() {
     $('.edit_box').children("input").focus(function() {
