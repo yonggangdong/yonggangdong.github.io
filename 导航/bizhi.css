@@ -6,7 +6,7 @@
     width: 100%;
 }
 #skin_bg {
-    background-color: #888;
+    background-color: #333;
     background-repeat: repeat;
     background-position: center top;
     background-size: cover;
@@ -35,7 +35,7 @@
     background-color: rgba(255,255,255,0.00) !important;
 }
 .tuijian_url ul li,.content li,.content-h li,.subMenu{
-    background-color: rgba(255,255,255,0.90) !important;
+    background-color: #999 !important;
 }
 .content-h{
     border:none;
