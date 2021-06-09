@@ -269,7 +269,7 @@ h1 .my_del {
 .searchbox{
   
     height:70px;
-    padding: 120px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
     margin:0px auto;
     margin-bottom: 20px;
 }
@@ -312,4 +312,3 @@ h1 .my_del {
     font-size: 18px;
     cursor: pointer;
 }
-
