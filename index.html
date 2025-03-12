@@ -1,163 +1,190 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>导航</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <link href="./恐龙/index.css" rel="stylesheet">
-  <link href="./导航/reset.css" rel="stylesheet" />
-  <link href="./导航/style.css" rel="stylesheet" />
-  <link href="./导航/bizhi.css" rel="stylesheet" />
-  <script src="./恐龙/index.js"></script>
+    <title>导航</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="./恐龙/index.css" rel="stylesheet">
+    <link href="./导航/reset.css" rel="stylesheet"/>
+    <link href="./导航/style.css" rel="stylesheet"/>
+    <link href="./导航/bizhi.css" rel="stylesheet"/>
+    <script src="./恐龙/index.js"></script>
 </head>
 <body id="t" class="offline">
 <div id="main-frame-error" class="interstitial-wrapper">
-  <div class="icon icon-offline"></div>
-  <div id="offline-resources">
-    <img id="offline-resources-1x" src="./恐龙/assets/default_100_percent/100-offline-sprite.png">
-    <img id="offline-resources-2x" src="./恐龙/assets/default_200_percent/200-offline-sprite.png">
-  </div>
+    <div class="icon icon-offline"></div>
+    <div id="offline-resources">
+        <img id="offline-resources-1x" src="./恐龙/assets/default_100_percent/100-offline-sprite.png">
+        <img id="offline-resources-2x" src="./恐龙/assets/default_200_percent/200-offline-sprite.png">
+    </div>
 </div>
 <div id="skin_bg"></div>
 <table align="center">
-  <tbody>
-  <tr>
-    <td>
-      <div class="searchbox">
-        <div class="serinput">
-          <form action="https://www.baidu.com/s" method="get" target="_blank" accept-charset="utf-8"
-                id="searchform">
-            <input class="f-l search_kw" type="text" name="wd" />
-            <input class="search_submit" value="搜&nbsp;索" type="submit" />
-          </form>
-        </div>
-      </div>
-      <div class="f-r">
-        <ul class="content banshi userlist" id="multi">
-          <li class="rank con_category">
-            <h1><b>项目</b></h1>
-            <div class="pbox">
-              <div class="urllist">
-                <div class="url_list">
-                  <img src="./导航/d2.png" height="16" width="16" />
-                  <a class="clickurl" href="https://yonggangdong.chandao.net/" target="_blank">禅道</a>
-                </div> 
-                <div class="url_list">
-                  <img src="./导航/a4.png" height="16" width="16" />
-                  <a class="clickurl" href="https://github.com/" target="_blank">GitHub</a>
+    <tbody>
+    <tr>
+        <td>
+            <div class="searchbox">
+                <div class="serinput">
+                    <form action="https://www.baidu.com/s" method="get" target="_blank" accept-charset="utf-8"
+                          id="searchform">
+                        <input class="f-l search_kw" type="text" name="wd"/>
+                        <input class="search_submit" value="搜&nbsp;索" type="submit"/>
+                        <input class="search_open" value="文心" type="button"
+                               onclick="window.open('https://chat.baidu.com/')"/>
+                    </form>
                 </div>
-                <div class="url_list">
-                  <img src="./导航/a3.png" height="16" width="16" />
-                  <a class="clickurl" href="https://gitee.com/" target="_blank">Gitee</a>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/a3.png" height="16" width="16" />
-                  <a class="clickurl" href="https://gitcode.com/" target="_blank">Gitcode</a>
-                </div>                
-              </div>
             </div>
-          </li>
-           <li class="rank con_category">
-            <h1><b>文档</b></h1>
-            <div class="pbox">
-              <div class="urllist">
-                 <div class="url_list">
-                  <img src="./导航/d3.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.ruankaodaren.com/" target="_blank">软考达人</a>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/d4.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.yysls.cn/" target="_blank">燕云</a>
-                </div>
-             <div class="url_list">
-              <img src="./导航/a1.png" height="16" width="16" />
-              <a class="clickurl" href="http://www.jeecg.com/" target="_blank">Jeecg</a>
-              </div>
-                <div class="url_list">
-                  <img src="./导航/a2.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.pickmall.cn/" target="_blank">Lilishop</a>
-                </div>           
-              </div>
+            <div class="f-r">
+                <ul class="content banshi userlist" id="multi">
+                    <li class="rank con_category">
+                        <h1><b>项目</b></h1>
+                        <div class="pbox">
+                            <div class="urllist">
+                                <div class="url_list">
+                                    <img src="./导航/d2.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://yonggangdong.chandao.net/"
+                                       target="_blank">禅道</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/a4.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://github.com/" target="_blank">GitHub</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/a3.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://gitee.com/" target="_blank">Gitee</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/a3.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://gitcode.com/" target="_blank">Gitcode</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="rank con_category">
+                        <h1><b>软件</b></h1>
+                        <div class="pbox">
+                            <div class="urllist">
+                                <div class="url_list">
+                                    <img src="./导航/a1.png" height="16" width="16"/>
+                                    <a class="clickurl" href="http://www.jeecg.com/" target="_blank">Jeecg</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/a2.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.pickmall.cn/" target="_blank">Lilishop</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/a1.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://demo.sunfmea.com/" target="_blank">SunFMEA</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/a2.png" height="16" width="16"/>
+                                    <a class="clickurl" href="http://sunmes.sunvua.com:8887/" target="_blank">SunMES</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="rank con_category">
+                        <h1><b>数据</b></h1>
+                        <div class="pbox">
+                            <div class="urllist">
+                                <div class="url_list">
+                                    <img src="./导航/c1.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://i.mi.com/" target="_blank">小米云</a>
+                                </div>
+                                <div class="urllist">
+                                    <div class="url_list">
+                                        <img src="./导航/c2.png" height="16" width="16"/>
+                                        <a class="clickurl" href="https://www.icloud.com.cn/" target="_blank">苹果云</a>
+                                    </div>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/c4.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://pan.baidu.com/" target="_blank">百度网盘</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/c3.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.alipan.com/drive" target="_blank">阿里网盘</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="rank con_category">
+                        <h1><b>学习</b></h1>
+                        <div class="pbox">
+                            <div class="urllist">
+                                <div class="url_list">
+                                    <img src="./导航/d3.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.ruankao.org.cn/" target="_blank">软考</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/d3.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.ruankaodaren.com/"
+                                       target="_blank">软考达人</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/d4.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://yz.chsi.com.cn/" target="_blank">考研</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/d4.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.examcoo.com/" target="_blank">考研帮</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="rank con_category">
+                        <h1><b>娱乐</b></h1>
+                        <div class="pbox">
+                            <div class="urllist">
+                                <div class="url_list">
+                                    <img src="./导航/b2.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.bilibili.com/" target="_blank">哔哩哔哩</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/b1.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.douyin.com/" target="_blank">抖音</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/b3.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.zhihu.com?theme=dark "
+                                       target="_blank">知乎</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/b4.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.douban.com/" target="_blank">豆瓣</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="rank con_category">
+                        <h1><b>购物</b></h1>
+                        <div class="pbox">
+                            <div class="urllist">
+                                <div class="url_list">
+                                    <img src="./导航/e1.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.taobao.com/" target="_blank">淘宝</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/e2.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.jd.com/" target="_blank">京东</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/e3.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.mi.com/" target="_blank">小米</a>
+                                </div>
+                                <div class="url_list">
+                                    <img src="./导航/e4.png" height="16" width="16"/>
+                                    <a class="clickurl" href="https://www.amazon.cn/" target="_blank">亚马逊</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-          </li>
-          <li class="rank con_category">
-            <h1><b>娱乐</b></h1>
-            <div class="pbox">
-              <div class="urllist">                
-             
-                <div class="url_list">
-                  <img src="./导航/b2.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.bilibili.com/" target="_blank">哔哩哔哩</a>
-                </div>     
-                   <div class="url_list">
-                  <img src="./导航/b1.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.douyin.com/" target="_blank">抖音</a>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/b3.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.zhihu.com?theme=dark " target="_blank">知乎</a>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/b4.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.douban.com/" target="_blank">豆瓣</a>
-                </div>
-              </div>
-            </div>
-          </li>
-           <li class="rank con_category">
-            <h1><b>购物</b></h1>
-            <div class="pbox">
-              <div class="urllist">
-                <div class="url_list">
-                  <img src="./导航/e1.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.taobao.com/" target="_blank">淘宝</a>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/e2.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.jd.com/" target="_blank">京东</a>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/e3.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.mi.com/" target="_blank">小米</a>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/e4.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.amazon.cn/" target="_blank">亚马逊</a>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="rank con_category">
-            <h1><b>手机</b></h1>
-            <div class="pbox">
-              <div class="urllist">
-                <div class="url_list">
-                  <img src="./导航/c1.png" height="16" width="16" />
-                  <a class="clickurl" href="https://i.mi.com/" target="_blank">小米云</a>
-                </div>
-                <div class="urllist">
-                  <div class="url_list">
-                    <img src="./导航/c2.png" height="16" width="16" />
-                    <a class="clickurl" href="https://www.icloud.com.cn/" target="_blank">苹果云</a>
-                  </div>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/c3.png" height="16" width="16" />
-                  <a class="clickurl" href="https://chat.baidu.com/" target="_blank">文心一言</a>
-                </div>
-                <div class="url_list">
-                  <img src="./导航/c4.png" height="16" width="16" />
-                  <a class="clickurl" href="https://www.aliyundrive.com/drive" target="_blank">阿里网盘</a>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </td>
-  </tr>
-  </tbody>
+        </td>
+    </tr>
+    </tbody>
 </table>
 </body>
 </html>
