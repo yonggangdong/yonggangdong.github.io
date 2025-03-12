@@ -1,7 +1,7 @@
 
 /*主体部分分块*/
 .content li {
-    width: 170px;
+    width: 150px;
     border-left: 1px #d9d9d9 dashed;
     float: left;
     background-color:#fff;
@@ -296,7 +296,7 @@ h1 .my_del {
     color:#333  !important;
 }
 .serinput input{
-    width:755px;
+    width:700px;
     height:40px;
     padding:5px 10px;
     border:none;
@@ -306,8 +306,16 @@ h1 .my_del {
 }
 .serinput input.search_submit{
     border-radius:0 5px 5px 0;
-    height:50px;width:80px;
+    height:50px;width:100px;
     background-color:#0099ee;
+    color:#fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+.serinput input.search_open{
+    border-radius:5px;
+    height:50px;width:80px;
+    background-color: #8aa53a;
     color:#fff;
     font-size: 18px;
     cursor: pointer;
